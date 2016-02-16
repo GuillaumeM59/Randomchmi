@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
+
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group_nbr, only: [:go_randomize]
 
   # GET /groups
   # GET /groups.json
@@ -32,7 +34,7 @@ class GroupsController < ApplicationController
           id_group.delete(rand_grp)
       end
     end
-    redirect_to :root, notice: "#{max_by_group}"
+    redirect_to root_path, notice: "#{max_by_group}"
 
   end
   # GET /groups/1
@@ -96,9 +98,18 @@ class GroupsController < ApplicationController
       @group = Group.find(params[:id])
     end
 
+    def set_group_nbr
+      if Group.all.size < 2
+        redirect_to root_path, notice: 'Need at least 2 groupe'
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:name, :salle, :tache)
-      params.require(:person).permit(:name, :group_id, :sensei)
     end
+    def person_params
+      params.require(:person).permit(:name, :email, :tel, :group_id, :sensei)
+    end
+
 end
