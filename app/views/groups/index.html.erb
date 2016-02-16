@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-  <%= link_to 'HOME', root_path %> <h1>Dispatching</h1>   
+  <%= link_to 'HOME', root_path %> <h1>Dispatching</h1>
 
 <table>
   <thead>
@@ -29,3 +29,29 @@
 <br>
 
 <%= link_to 'New Group', new_group_path %>
+
+
+<h1>Listing People</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Group</th>
+      <th>Sensei</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= person.group_id %></td>
+        <td><%= person.sensei %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Randomize-me', root_path %>
