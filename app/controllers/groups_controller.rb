@@ -8,6 +8,33 @@ class GroupsController < ApplicationController
     @people = Person.all
   end
 
+  def go_randomize
+    @groups = Group.all
+    @people = Person.all
+    max_by_group = (@people.size/ @groups.size).ceil+1
+
+    id_group = []
+    @people.each do |person|
+      person.group_id = nil
+      person.save
+    end
+
+    @groups.each do |group|
+        id_group << group.id
+    end
+
+    @people.each do |person|
+      rand_grp = id_group.sample
+      person.group_id = rand_grp
+      person.save
+
+      if Person.where(group_id:rand_grp).size == max_by_group
+          id_group.delete(rand_grp)
+      end
+    end
+    redirect_to :root, notice: "#{max_by_group}"
+
+  end
   # GET /groups/1
   # GET /groups/1.json
   def show
@@ -61,6 +88,7 @@ class GroupsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

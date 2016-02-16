@@ -45,3 +45,7 @@ group :development do
   gem 'spring'
 end
 
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap_form'
+gem 'autoprefixer-rails'
+gem 'sprockets-rails', '>= 2.1.4'
