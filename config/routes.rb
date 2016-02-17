@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'cleargrpsid' => 'people#reinitialize'
   get 'updatesensei/:id' => 'people#updatesensei' , as: 'updatesensei'
   get 'rmvfromgrp/:id' => 'people#reinitgrpid' , as: 'rmvfromgrp'
+  get 'cleargroup/:id' => 'people#cleargrp' , as: 'cleargroup'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

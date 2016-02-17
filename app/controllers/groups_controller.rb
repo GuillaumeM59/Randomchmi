@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
 
   before_action :set_group, only: [:show, :edit, :update, :destroy]
-  before_action :set_group_nbr, only: [:go_randomize]
+
 
   # GET /groups
   # GET /groups.json
@@ -11,32 +11,21 @@ class GroupsController < ApplicationController
   end
 
   def go_randomize
-    @groups = Group.all
-    @people = Person.all
-    max_by_group = (@people.size/ @groups.size).ceil+1
-
-    id_group = []
-    @people.each do |person|
-      person.group_id = nil
-      person.save
-    end
-
-    @groups.each do |group|
-        id_group << group.id
-    end
-
-    @people.each do |person|
-      rand_grp = id_group.sample
-      person.group_id = rand_grp
-      person.save
-
-      if Person.where(group_id:rand_grp).size == max_by_group
-          id_group.delete(rand_grp)
-      end
-    end
-    redirect_to root_path, notice: "#{max_by_group}"
-
+    idperson = Person.all.map{|x| x.id}
+            if Group.all.count>0
+                while idperson.count >0
+                  Group.all.each do |grp|
+                    a = idperson.sample
+                    Person.find(a).update_attributes(group_id: grp.id) unless a.nil?
+                    idperson.delete(a)
+                  end
+                end
+                redirect_to :root, notice: "ramdomize done"
+           else
+               redirect_to :root, notice: "there must have to be a least one group !"
+            end
   end
+
   # GET /groups/1
   # GET /groups/1.json
   def show
@@ -87,6 +76,13 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
+    classe = Person.all
+    classe.each do |person|
+      if person.group_id == @group.id
+      person.group_id = nil
+      person.save
+    end
+    end
     @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
@@ -101,18 +97,12 @@ class GroupsController < ApplicationController
       @group = Group.find(params[:id])
     end
 
-    def set_group_nbr
-      if Group.all.size < 2
-        redirect_to root_path, notice: 'Need at least 2 groupe'
-      end
-    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:name, :salle, :tache)
     end
-    def person_params
-      params.require(:person).permit(:name, :email, :tel, :group_id, :sensei)
-    end
+
 
 end
