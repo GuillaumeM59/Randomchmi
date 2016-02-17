@@ -58,6 +58,7 @@ before_action :set_group, only: [:cleargrp]
     classe = Person.all
     classe.each do |person|
       person.group_id = nil
+      person.sensei = false
       person.save
     end
     redirect_to :root
@@ -68,6 +69,7 @@ before_action :set_group, only: [:cleargrp]
     classe.each do |person|
       if person.group_id == @group.id
       person.group_id = nil
+      person.sensei = false
       person.save
     end
     end
@@ -77,16 +79,12 @@ before_action :set_group, only: [:cleargrp]
 
   def reinitgrpid
     @person.group_id = nil
+    @person.sensei = false
     @person.save
     redirect_to :root
   end
 
-  def updtgrpid
-    @group = Group.all
 
-    @person.group_id = "group.id selectionné"
-
-  end
 
   def updatesensei
     check= @person.sensei

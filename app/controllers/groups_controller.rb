@@ -80,6 +80,7 @@ class GroupsController < ApplicationController
     classe.each do |person|
       if person.group_id == @group.id
       person.group_id = nil
+      person.sensei = false
       person.save
     end
     end
