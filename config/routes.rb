@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   root 'groups#index'
   get 'randomize' => 'groups#go_randomize'
+  get 'cleargrpsid' => 'people#reinitialize'
+  get 'updatesensei/:id' => 'people#updatesensei' , as: 'updatesensei'
+  get 'rmvfromgrp/:id' => 'people#reinitgrpid' , as: 'rmvfromgrp'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

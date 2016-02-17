@@ -24,7 +24,13 @@
         <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><% @people.each do |person| %>
             <% if person.group_id == group.id %>
-          <p><%=person.name %> </p>
+          <p><%=person.name %>
+            <% if person.sensei %>
+              <span>(SENSEI!!!)<span>
+            <% end %>
+            <%= link_to 'sensei + ou -', updatesensei_path(person) %>
+            <%= link_to 'Remove from Group', rmvfromgrp_path(person) %>
+           </p>
             <%end%>
         <% end %></td>
       </tr>
@@ -35,6 +41,7 @@
 <br>
 
 <%= link_to 'New Group', new_group_path %>
+<%= link_to 'Clear Groups', cleargrpsid_path %>
 
 
 <h1>Listing People</h1>
@@ -51,11 +58,13 @@
 
   <tbody>
     <% @people.each do |person| %>
+    <% if person.group_id == nil %>
       <tr>
         <td><%= person.name %></td>
         <td><%= person.group_id %></td>
         <td><%= person.sensei %></td>
       </tr>
+    <% end %>
     <% end %>
   </tbody>
 </table>

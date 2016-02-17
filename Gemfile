@@ -53,3 +53,10 @@ end
   gem 'autoprefixer-rails'
 
   gem 'sprockets-rails', '>= 2.1.4'
+
+  #BEST IN PLACE
+  gem 'best_in_place'
+
+  #DEBUG HELPERSq
+  gem 'quiet_assets', '~> 1.1'
+  gem 'pry'
