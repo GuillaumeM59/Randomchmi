@@ -1,76 +1,73 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="row">
 
-  <%= link_to 'HOME', root_path %> <h1>Dispatching</h1>
+    <p id="notice"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Salle</th>
-      <th>Tache</th>
-      <th colspan="4"></th>
-      <th> contient </th>
-    </tr>
-  </thead>
+    <h1 class="text-center">Dispatching</h1>
+    <div class="col-xs-12 col-sm-10 Pliste col-md-3">
 
-  <tbody>
+      <h2>Listing People <span class="glyphicon glyphicon-user" aria-hidden="true"></span></h2>
+
+      <div class="row" id="Pliste">
+
+        <%= render "partials/dropdownperson" %>
+
+  </div>
+
+  <%= link_to 'Randomize-me', randomize_path %>
+
+</div>
+<!-- End Pliste block -->
+
+<div class="col-xs-12 col-sm-10 col-md-9 Gliste">
+
+    <h2>Listing Groups <span class="glyphicon glyphicon-th" aria-hidden="true"></span></h2>
+
     <% @groups.each do |group| %>
-      <tr>
-        <td><%= group.name %></td>
-        <td><%= group.salle %></td>
-        <td><%= group.tache %></td>
-        <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Clear Group', cleargroup_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><% @people.each do |person| %>
-            <% if person.group_id == group.id %>
-          <p><%=person.name %>
-            <% if person.sensei %>
-              <span>(SENSEI!!!)<span>
-            <% end %>
-            <%= link_to 'sensei + ou -', updatesensei_path(person) %>
-            <%= link_to 'Remove from Group', rmvfromgrp_path(person) %>
-           </p>
-            <%end%>
-        <% end %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="col-md-4 Gname">
+      <h3><%= group.name %></h3>
 
-<br>
+      <ul>
+        <% @people.each do |person| %>
+        <% if person.group_id == group.id %>
+        <li><%=person.name %>
+          <% if person.sensei %>
+          <span class="sensei">(SENSEI!!!)</span>
+          <% end %>
+          <%= link_to 'sensei + ou -', updatesensei_path(person) %>
+          <%= link_to 'Remove from Group', rmvfromgrp_path(person) %>
+        </li>
+        <% end %>
+        <% end %>
+      </ul>
+      <h4>ROOM:
+        <%= group.salle%></h3>
 
-<%= link_to 'New Group', new_group_path %>
-<%= link_to 'Clear Groups', cleargrpsid_path %>
+    <div class="Gtache">
+      <h3><%= group.tache %></h3>
+    </div>
+    <div class="editgrp">
+      <ul>
 
+      <li><%= link_to 'Show', group %></li>
+      <li><%= link_to 'Edit', edit_group_path(group) %></li>
+      <li><%= link_to 'Clear Group', cleargroup_path(group) %></li>
+      <li><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    </ul>
 
-<h1>Listing People</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Group</th>
-      <th>Sensei</th>
-      <th>Change Groupe</th>
+    </div>
+    <%end%>
 
 
-    </tr>
-  </thead>
-gfdhgdh
-  <tbody>
-    <% @people.each do |person| %>
-    <% if person.group_id == nil %>
-      <tr>
-        <td><%= person.name %></td>
-        <td><%= person.group_id %></td>
-        <td><%= person.sensei %></td>
-        <td><%= best_in_place person, :group_id, :as => :select, :collection => Group.all.map{|x| [x.id, x.name] }%></td>
-      </tr>
-    <% end %>
-    <% end %>
-  </tbody>
-</table>
+  <br>
 
-<%= link_to 'Randomize-me', randomize_path%>
+  <%= link_to 'New Group', new_group_path %>
+  <%= link_to 'Clear Groups', cleargrpsid_path %>
+</div>
+<!-- END Gliste block -->
+
+</div>
+<!-- END row -->
+
+</div>
+<!-- END container -->

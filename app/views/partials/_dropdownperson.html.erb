@@ -1,0 +1,41 @@
+<% Person.all.each do |person| %>
+<% if person.group_id == nil %>
+
+<% if Group.all.size == 0 %>
+<div class="col-md-12 text-center">
+  <%= content_tag(:button, class:"btn btn-default dropdown-toggle", type:"button", id:"dropdownMenu#{person.name}", :'data-toggle'=>"dropdown", :'aria-haspopup'=>"true", :'aria-expanded' => "true") do %>
+    <%=person.name%>
+    <%=content_tag(:span,"", :class =>"caret")%>
+  <%end%>
+
+
+
+  <%= content_tag(:ul, class:"dropdown-menu", :'aria-labelledby'=>"dropdownMenu#{person.name}") do %>
+    <%=content_tag(:li, person.email)%>
+    <%=content_tag(:li, person.tel)%>
+  <%end%>
+
+
+</div>
+<% else %>
+<div class="col-md-8 text-center">
+  <%= content_tag(:button, class:"btn btn-default dropdown-toggle", type:"button", id:"dropdownMenu#{person.name}", :'data-toggle'=>"dropdown", :'aria_haspopup'=>"true", :'aria-expanded'=>"true") do %>
+    <%=person.name%>
+    <%=content_tag(:span,"", :class =>"caret")%>
+  <%end%>
+
+
+
+  <%= content_tag(:ul, class:"dropdown-menu", :'aria-labelledby' =>"dropdownMenu#{person.name}") do %>
+    <%=content_tag(:li, person.email)%>
+    <%=content_tag(:li, person.tel)%>
+  <%end%>
+
+</div>
+<div class="col-md-4 text-center">
+<%= best_in_place person, :group_id, :as => :select, :collection => Group.all.map{|x| [x.id, x.name] }%>
+</div>
+<% end %>
+
+<% end %>
+<% end %>

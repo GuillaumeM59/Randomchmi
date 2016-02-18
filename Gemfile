@@ -57,6 +57,7 @@ end
   #BEST IN PLACE
   gem 'best_in_place'
 
-  #DEBUG HELPERSq
+  #DEBUG HELPERS
+  gem 'better_errors'
   gem 'quiet_assets', '~> 1.1'
   gem 'pry'
